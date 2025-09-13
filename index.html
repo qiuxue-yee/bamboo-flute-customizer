@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互式3D竹笛定制工具</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>3D竹笛定制工具</h1>
+        <p>自定义您的专属竹笛设计</p>
+    </header>
+
+    <main>
+        <div id="canvas-container"></div>
+
+        <div class="controls-panel">
+            <div class="mode-switcher">
+                <label class="switch">
+                    <input type="checkbox" id="mode-toggle">
+                    <span class="slider round">
+                        <span class="slider-labels">
+                            <span class="label-visual">视觉模式</span>
+                            <span class="label-print">打印模式</span>
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="customization-controls">
+                <div class="control-group" id="visual-controls">
+                    <h3>视觉模式定制</h3>
+                    <div class="control-item">
+                        <label for="pattern-upload">上传图案：</label>
+                        <input type="file" id="pattern-upload" accept="image/*">
+                    </div>
+                    <div class="control-item">
+                        <label for="text-input">添加文字：</label>
+                        <input type="text" id="text-input" placeholder="输入要添加的文字">
+                        <input type="color" id="text-color" value="#000000">
+                    </div>
+                </div>
+
+                <div class="control-group" id="print-controls" style="display: none;">
+                    <h3>打印模式定制</h3>
+                    <div class="control-item">
+                        <label for="pattern-upload-print">上传图案（黑白）：</label>
+                        <input type="file" id="pattern-upload-print" accept="image/*,.svg">
+                    </div>
+                    <div class="control-item">
+                        <label for="depth-slider">浮雕深度：</label>
+                        <input type="range" id="depth-slider" min="0.1" max="5" step="0.1" value="1">
+                        <span id="depth-value">1.0mm</span>
+                    </div>
+                    <div class="control-item">
+                        <label for="text-input-print">添加文字：</label>
+                        <input type="text" id="text-input-print" placeholder="输入要雕刻的文字">
+                        <input type="checkbox" id="text-emboss"> <label for="text-emboss">浮雕</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="export-controls">
+                <button id="export-btn" class="btn primary">导出模型</button>
+                <select id="export-format">
+                    <option value="glb">GLB (带纹理)</option>
+                    <option value="stl">STL (3D打印)</option>
+                </select>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 3D竹笛定制工具 | 使用 Three.js 构建</p>
+    </footer>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- 优化代理脚本 -->
+    <script src="AnimationOptimizer.js"></script>
+    <script src="GPUOptimizer.js"></script>
+    <script src="MemoryOptimizer.js"></script>
+    <script src="MobileOptimizer.js"></script>
+    <script src="AgentCoordinator.js"></script>
+    <script src="AgentIntegration.js"></script>
+
+    <!-- 主应用脚本 -->
+    <script src="main.js"></script>
+
+    <!-- 代理协调系统演示脚本 -->
+    <script src="AgentCoordinationDemo.js"></script>
+</body>
+</html>
