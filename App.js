@@ -38,7 +38,7 @@ export class App {
      * 获取当前语言的国际化字符串
      */
     getString(key, defaultValue = '') {
-        const currentLang = localStorage.getItem('lang') || 'en';
+        const currentLang = 'en';
         return this.locales?.[currentLang]?.[key] || this.locales?.en?.[key] || defaultValue;
     }
     
@@ -400,55 +400,9 @@ export class App {
             if (window.__DEV__) if (window.__DEV__) console.log(`Language applied successfully: ${lang}`);
         };
         
-        // 使用可靠的事件处理设置语言选择器
-        const setupLanguageSelector = () => {
-            const langSelect = document.getElementById('lang-select');
-            if (!langSelect) {
-                if (window.__DEV__) if (window.__DEV__) console.warn('Language selector not found, retrying...');
-                setTimeout(setupLanguageSelector, 200);
-                return;
-            }
-
-            // 应用初始语言
-            const savedLang = localStorage.getItem('lang') || 'en';
-            langSelect.value = savedLang;
-            applyLanguage(savedLang);
-            
-            // 启用选择器
-            langSelect.disabled = false;
-            
-            // 通过替换元素移除任何现有监听器
-            const newSelect = langSelect.cloneNode(true);
-            langSelect.parentNode.replaceChild(newSelect, langSelect);
-            
-            // 为新元素添加新的事件监听器
-            const freshSelect = document.getElementById('lang-select');
-            freshSelect.value = savedLang; // 确保值被保持
-            
-            freshSelect.addEventListener('change', (e) => {
-                const selectedLang = e.target.value;
-                localStorage.setItem('lang', selectedLang);
-                applyLanguage(selectedLang);
-            });
-            
-            // 也尝试点击事件作为备用
-            freshSelect.addEventListener('click', () => {
-                setTimeout(() => {
-                    const currentLang = freshSelect.value;
-                    const savedLang = localStorage.getItem('lang') || 'en';
-                    if (currentLang !== savedLang) {
-                        if (window.__DEV__) console.log('Language detected via click:', currentLang);
-                        localStorage.setItem('lang', currentLang);
-                        applyLanguage(currentLang);
-                    }
-                }, 100);
-            });
-            
-            if (window.__DEV__) if (window.__DEV__) console.log('Language selector fully configured');
-        };
-        
-        // 开始设置
-        setupLanguageSelector();
+        // Language selector removed - English only
+        // Apply English language directly
+        applyLanguage('en');
     }
     
     // 当UIController不可用时的备用语言更新
@@ -777,7 +731,7 @@ export class App {
 
             // 更新状态
         if (this.imageUvStatus) {
-            const currentLang = document.querySelector('select[id="lang-select"]')?.value || localStorage.getItem('lang') || 'en';
+            const currentLang = 'en';
             const strings = (this.locales && this.locales[currentLang]) || (this.locales && this.locales.en) || {};
             this.imageUvStatus.textContent = strings.waiting_image || '等待图像内容...';
         }
@@ -801,7 +755,7 @@ export class App {
 
             // 更新状态
             if (this.textUvStatus) {
-                const currentLang = document.querySelector('select[id="lang-select"]')?.value || 'en';
+                const currentLang = 'en';
                 const strings = (this.locales && this.locales[currentLang]) || (this.locales && this.locales.en) || {};
                 this.textUvStatus.textContent = `${strings.previewText || '文字预览'}: "${text}"`;
             }
@@ -820,7 +774,7 @@ export class App {
 
             // 更新状态
         if (this.imageUvStatus) {
-            const currentLang = document.querySelector('select[id="lang-select"]')?.value || localStorage.getItem('lang') || 'en';
+            const currentLang = 'en';
             const strings = (this.locales && this.locales[currentLang]) || (this.locales && this.locales.en) || {};
             this.imageUvStatus.textContent = strings.previewImage || '图案预览';
         }
@@ -1064,7 +1018,7 @@ export class App {
         try {
             const state = {
                 timestamp: Date.now(),
-                language: document.getElementById('lang-select')?.value || 'zh',
+                language: 'en',
                 theme: document.documentElement.getAttribute('data-theme') || 'dark'
             };
             localStorage.setItem('bambooFluteState', JSON.stringify(state));
