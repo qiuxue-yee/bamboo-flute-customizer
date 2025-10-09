@@ -1,0 +1,28 @@
+/* UV布局占位符样式 - 在PNG资源不可用时使用 */
+
+/* 文字UV背景图案 */
+#textUvCanvas {
+  background: 
+    /* 文字区域交叉图案 */
+    linear-gradient(45deg, rgba(255, 200, 100, 0.15) 25%, transparent 25%), 
+    linear-gradient(-45deg, rgba(255, 200, 100, 0.15) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 200, 100, 0.15) 75%), 
+    linear-gradient(-45deg, transparent 75%, rgba(255, 200, 100, 0.15) 75%),
+    /* 网格图案 */
+    linear-gradient(90deg, rgba(255, 200, 100, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255, 200, 100, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px, 20px 20px, 20px 20px, 20px 20px, 10px 10px, 10px 10px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px, 0 0, 0 0;
+}
+
+/* 图像UV背景图案 */
+#imageUvCanvas {
+  background: 
+    /* 图像区域菱形图案 */
+    radial-gradient(circle at 50% 50%, rgba(100, 255, 200, 0.2) 2px, transparent 2px),
+    /* 网格图案 */
+    linear-gradient(90deg, rgba(100, 255, 200, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(100, 255, 200, 0.1) 1px, transparent 1px);
+  background-size: 15px 15px, 10px 10px, 10px 10px;
+  background-position: 0 0, 0 0, 0 0;
+}

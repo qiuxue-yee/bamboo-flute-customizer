@@ -3,95 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>交互式3D竹笛定制工具</title>
+    <title>交互�?D竹笛定制工具</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/uv_layout_placeholder.css">
 </head>
-<body>
-    <header>
-        <h1>3D竹笛定制工具</h1>
-        <p>自定义您的专属竹笛设计</p>
-    </header>
-
+<body class="framed">
     <main>
-        <div id="canvas-container"></div>
-
-        <div class="controls-panel">
-            <div class="mode-switcher">
-                <label class="switch">
-                    <input type="checkbox" id="mode-toggle">
-                    <span class="slider round">
-                        <span class="slider-labels">
-                            <span class="label-visual">视觉模式</span>
-                            <span class="label-print">打印模式</span>
-                        </span>
-                    </span>
-                </label>
+        <!-- 主应用容器（国风主题） -->
+        <div class="app-container">
+            
+            
+            <!-- 中央：3D视口（带边框） -->
+            <div class="viewport-frame">
+                <div id="canvas-container"></div>
             </div>
-
-            <div class="customization-controls">
-                <div class="control-group" id="visual-controls">
-                    <h3>视觉模式定制</h3>
-                    <div class="control-item">
-                        <label for="pattern-upload">上传图案：</label>
-                        <input type="file" id="pattern-upload" accept="image/*">
-                    </div>
-                    <div class="control-item">
-                        <label for="text-input">添加文字：</label>
-                        <input type="text" id="text-input" placeholder="输入要添加的文字">
-                        <input type="color" id="text-color" value="#000000">
+            
+            <!-- 右侧：统一控制面板（国风） -->
+            <div class="right-panel">
+                <!-- 1) 图像UV预览 -->
+                <div class="card uv-card" role="region" aria-labelledby="uv-preview-title">
+                    <h3 id="uv-preview-title" class="preview-title" data-i18n-key="image_uv_preview">图案UV预览</h3>
+                    <div id="uvPreviewPanel" class="uv-preview-panel">
+                        <div class="uv-preview-container">
+                            <div id="imageUvContainer" class="uv-container">
+                                <h4 class="uv-section-title">图像UV</h4>
+                                <div class="uv-canvas-wrapper">
+                                    <canvas id="imageUvCanvas" width="260" height="120" aria-label="图像UV预览画布"></canvas>
+                                </div>
+                                <p class="uv-status" id="imageUvStatus" data-i18n-key="waiting_image" role="status" aria-live="polite">等待图像内容...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="control-group" id="print-controls" style="display: none;">
-                    <h3>打印模式定制</h3>
-                    <div class="control-item">
-                        <label for="pattern-upload-print">上传图案（黑白）：</label>
-                        <input type="file" id="pattern-upload-print" accept="image/*,.svg">
+                <!-- 2) 图像定制 -->
+                <div class="card" role="region" aria-labelledby="image-customization-title">
+                    <h3 id="image-customization-title" class="card-title" data-i18n-key="image_customization">图案定制</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="pattern-upload" data-i18n-key="upload_pattern">上传图案</label>
+                        <div class="form-row">
+                            <button id="pattern-upload" class="btn btn-secondary" data-i18n-key="select_file" aria-label="Select image file">选择文件</button>
+                            <span id="file-name-display" class="file-name" data-i18n-key="no_file_chosen" role="status" aria-live="polite">未选择文件</span>
+                        </div>
+                        <button id="clear-image-btn" class="btn btn-secondary" data-i18n-key="clear_image" aria-label="Clear uploaded image">清除图案</button>
                     </div>
-                    <div class="control-item">
-                        <label for="depth-slider">浮雕深度：</label>
-                        <input type="range" id="depth-slider" min="0.1" max="5" step="0.1" value="1">
-                        <span id="depth-value">1.0mm</span>
-                    </div>
-                    <div class="control-item">
-                        <label for="text-input-print">添加文字：</label>
-                        <input type="text" id="text-input-print" placeholder="输入要雕刻的文字">
-                        <input type="checkbox" id="text-emboss"> <label for="text-emboss">浮雕</label>
+                    
+                    <div class="form-group">
+                        <label class="form-label" data-i18n-key="position_offset">位置偏移</label>
+                        <div class="slider-container">
+                            <span class="slider-label" aria-hidden="true">U</span>
+                            <input type="range" min="-1" max="1" value="0" step="0.01" class="slider" id="u-slider" aria-label="Horizontal offset (U coordinate)" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0">
+                            <span class="slider-value" id="u-value" aria-live="polite">0.00</span>
+                        </div>
+                        <div class="slider-container">
+                            <span class="slider-label" aria-hidden="true">V</span>
+                            <input type="range" min="-1" max="1" value="0" step="0.01" class="slider" id="v-slider" aria-label="Vertical offset (V coordinate)" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0">
+                            <span class="slider-value" id="v-value" aria-live="polite">0.00</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="export-controls">
-                <button id="export-btn" class="btn primary">导出模型</button>
-                <select id="export-format">
-                    <option value="glb">GLB (带纹理)</option>
-                    <option value="stl">STL (3D打印)</option>
-                </select>
+                <!-- 3) 导出 -->
+                <div class="card" role="region" aria-labelledby="export-title">
+                    <h3 id="export-title" class="card-title" data-i18n-key="export">导出</h3>
+                    <div class="form-group">
+                        <div class="select-wrapper">
+                        <label for="export-format-select" class="sr-only">导出格式</label>
+                        <select id="export-format-select" class="form-select" aria-label="选择导出格式">
+                            <option value="zip" data-i18n-key="packaging_zip">制造包 (ZIP)</option>
+                            <option value="glb">GLB</option>
+                            <option value="stl">STL</option>
+                        </select>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="include-stl-checkbox" class="form-checkbox" checked aria-describedby="stl-checkbox-label">
+                            <label id="stl-checkbox-label" for="include-stl-checkbox" data-i18n-key="include_stl">包含STL文件</label>
+                        </div>
+                        <button id="export-model-btn" class="btn btn-primary" data-i18n-key="export_btn" aria-label="Export customized model">导出制造包</button>
+                    </div>
+                </div>
+
+                <!-- 4) 应用控制 -->
+                <div class="card app-controls-card" role="region" aria-labelledby="app-controls-title">
+                    <h3 id="app-controls-title" class="card-title" data-i18n-key="application_controls">应用控制</h3>
+                    <div class="form-group">
+                        <div class="select-wrapper">
+                        <label for="lang-select" class="sr-only">语言选择</label>
+                        <select id="lang-select" class="form-select" aria-label="选择语言">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                        </select>
+                        </div>
+                    </div>
+                    <button id="open-guide-btn" class="btn btn-secondary" data-i18n-key="view_user_guide" aria-label="Open user guide">查看操作指南</button>
+                </div>
             </div>
         </div>
+
+        <!-- 用户指南模态框 -->
+        <div id="guide-modal-overlay" class="modal-overlay hidden" role="dialog" aria-labelledby="guide-modal-title" aria-modal="true">
+            <div id="guide-modal" class="modal-content">
+                <button id="close-guide-modal" class="modal-close-btn" aria-label="关闭用户指南">&times;</button>
+                <h3 id="guide-modal-title" data-i18n-key="guide_title">用户指南</h3>
+                
+                <div style="background: #fff3cd; padding: 12px; margin-bottom: 15px; border-radius: 6px; border-left: 4px solid #ffc107;">
+                    <p style="margin: 0; font-size: 14px; color: #856404;">
+                        <b data-i18n-key="guide_notice_title">重要通知：</b>
+                        <span data-i18n-key="guide_notice_text">Web预览可能与导出结果略有不同。在最终ZIP导出前使用GLB导出验证定位。查看结果：<a href="https://gltf-viewer.donmccurdy.com/" target="_blank" style="color: #0066cc;">gltf-viewer.donmccurdy.com</a></span>
+                    </p>
+                </div>
+                
+                <ul>
+                    <li data-i18n-key="guide_sec1_title"><b>3D视图控制</b></li>
+                    <li data-i18n-key="guide_sec1_item1"><b>旋转：</b> 使用方向键或WASD键围绕模型旋转相机。</li>
+                    <li data-i18n-key="guide_sec1_item2"><b>缩放：</b> 滚动鼠标滚轮放大或缩小。</li>
+                    <li data-i18n-key="guide_sec1_item3"><b>平移：</b> 右键拖拽移动视图。</li>
+
+                    <li data-i18n-key="guide_sec2_title"><b>图像定制</b></li>
+                    <li data-i18n-key="guide_sec2_item1"><b>上传：</b> 点击"选择文件"按钮。支持PNG、JPG、WebP格式（建议最大5MB）。</li>
+                    <li data-i18n-key="guide_sec2_item2"><b>调整：</b> 上传后，使用U（水平）和V（垂直）滑块调整图像在笛子上的位置。</li>
+                    <li data-i18n-key="guide_sec2_item3"><b>UV预览：</b> 预览面板实时显示图像在UV贴图上的布局。</li>
+
+                    <li data-i18n-key="guide_sec3_title"><b>导出</b></li>
+                    <li data-i18n-key="guide_sec3_item1"><b>GLB（单个文件）：</b> 仅导出定制部件用于快速预览验证。在最终导出前使用此选项检查定位准确性。</li>
+                    <li data-i18n-key="guide_sec3_item2"><b>制造包（ZIP）：</b> 包含所有3D部件的完整包，以GLB格式，可直接用于生产或导入3D软件。</li>
+                    <li data-i18n-key="guide_sec3_item3"><b>包含STL：</b> 选中后，将添加优化用于3D打印的STL文件到包中。</li>
+                </ul>
+            </div>
+        </div>
+        
+
+        <!-- 加载覆盖层 -->
+        <div id="loading-overlay" role="status" aria-live="polite">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n-key="loading_3d_model">正在加载3D模型...</div>
+        </div>
+
+        
+
     </main>
 
-    <footer>
-        <p>© 2024 3D竹笛定制工具 | 使用 Three.js 构建</p>
-    </footer>
-
-    <!-- Three.js -->
+    <!-- Three.js库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
+    <!-- 3D模型导出库 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/STLExporter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/OBJExporter.js"></script>
+    <!-- JSZip用于创建制造ZIP包 -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- GSAP用于平滑相机动画 -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-    <!-- 优化代理脚本 -->
-    <script src="AnimationOptimizer.js"></script>
-    <script src="GPUOptimizer.js"></script>
-    <script src="MemoryOptimizer.js"></script>
-    <script src="MobileOptimizer.js"></script>
-    <script src="AgentCoordinator.js"></script>
-    <script src="AgentIntegration.js"></script>
-
-    <!-- 主应用脚本 -->
-    <script src="main.js"></script>
-
-    <!-- 代理协调系统演示脚本 -->
-    <script src="AgentCoordinationDemo.js"></script>
+    <!-- 主应用脚本（ES模块） -->
+    <script type="module" src="main.js"></script>
 </body>
 </html>
