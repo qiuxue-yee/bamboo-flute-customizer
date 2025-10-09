@@ -117,7 +117,7 @@ export class App {
         } catch (error) {
             if (window.__DEV__) if (window.__DEV__) console.error('Failed to initialize application:', error);
             if (this.ui) {
-                this.ui.toast(this.getString('failed_init', '应用初始化失败'), 'error');
+                this.ui.toast(this.getString('failed_init', 'Application initialization failed'), 'error');
             }
         }
     }
@@ -571,7 +571,7 @@ export class App {
         if (uvData) {
             // 在画布上渲染真实的UV布局
             this.renderRealUVLayout(uvData);
-            if (window.__DEV__) if (window.__DEV__) console.log('真实UV布局渲染成功');
+            if (window.__DEV__) if (window.__DEV__) console.log('Real UV layout rendered successfully');
         } else {
             if (window.__DEV__) if (window.__DEV__) console.warn('无法提取UV数据，回退到占位符');
             this.clearTextUvPreview();
@@ -637,7 +637,7 @@ export class App {
         // 渲染图像UV布局
         if (uvData.imageUVs && this.imageUvContext) {
             this.renderUVMeshOnCanvas(this.imageUvContext, this.imageUvCanvas, uvData.imageUVs, 'image');
-            this.imageUvStatus.textContent = `图像UV布局 (${uvData.imageUVs.meshName})`;
+            this.imageUvStatus.textContent = `Image UV Layout (${uvData.imageUVs.meshName})`;
         }
     }
 

@@ -36,11 +36,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         // 为代理访问和调试全局暴露应用
         window.app = appInstance;
 
-        console.log('3D竹笛定制器初始化成功');
+        console.log('3D Bamboo Flute Customizer initialized successfully');
 
     } catch (error) {
-        console.error('应用初始化失败:', error);
-        alert('应用初始化失败。请刷新页面重试。');
+        console.error('Application initialization failed:', error);
+        alert('Application initialization failed. Please refresh the page and try again.');
     }
     
     // --- 模态框逻辑开始 --- （在DOM准备就绪后直接绑定）

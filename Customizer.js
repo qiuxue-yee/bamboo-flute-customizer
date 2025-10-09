@@ -843,14 +843,14 @@ export class Customizer {
         if (!applied) {
             console.warn('未找到图片材质。可用材质:', availableMaterials);
             console.warn('期望材质: Custom_Area_Image，或包含关键词: image, pattern, photo');
-            this.ui.toast('模型上未找到图片区域 - 请检查材质名称', 'error');
+            this.ui.toast('Image area not found on model - please check material name', 'error');
         } else {
-            console.log('图片纹理应用成功!');
-            this.ui.toast('图片纹理应用成功', 'success');
+            console.log('Image texture applied successfully!');
+            this.ui.toast('Image texture applied successfully', 'success');
             
             // 存储以供导出并进行验证
             if (this.validateAndStoreTexture(texture, 'image')) {
-                console.log('图片纹理已存储以供导出');
+                console.log('Image texture stored for export');
             } else {
                 console.error('存储图片纹理以供导出失败');
             }
@@ -1888,10 +1888,10 @@ export class Customizer {
                 this.updateExportProgress(80, 'Exporting customized Part 3 as STL...');
                 files['Part_3_Customized.stl'] = await this.exportModelAsSTL(customizedPart3);
                 
-                console.log('STL文件导出成功');
+                console.log('STL file exported successfully');
             } catch (error) {
                 console.warn('STL导出失败，仅继续GLB:', error);
-                this.ui.toast('STL导出失败，仅继续GLB文件', 'warning');
+                this.ui.toast('STL export failed, continuing with GLB files only', 'warning');
             }
         }
         
@@ -1936,10 +1936,10 @@ export class Customizer {
             try {
                 this.updateExportProgress(70, 'Exporting as STL...');
                 files['Customized_Bamboo_Flute.stl'] = await this.exportModelAsSTL(customizedModel);
-                console.log('显示模型STL导出成功');
+                console.log('Display model STL exported successfully');
             } catch (error) {
                 console.warn('显示模型STL导出失败:', error);
-                this.ui.toast('STL导出失败，仅继续GLB文件', 'warning');
+                this.ui.toast('STL export failed, continuing with GLB files only', 'warning');
             }
         }
         
@@ -2198,10 +2198,10 @@ This report provides complete verification info along with screenshot and model 
         
         // 短暂延迟以显示100%完成状态然后隐藏
         setTimeout(() => {
-        this.ui.toast('制造文件导出成功', 'success');
+        this.ui.toast('Manufacturing files exported successfully', 'success');
         }, 500);
         
-        console.log('制造导出成功完成');
+        console.log('Manufacturing export completed successfully');
     }
 
     /**
@@ -2660,7 +2660,7 @@ This report provides complete verification info along with screenshot and model 
                             
                             this.convertGltfJsonToGlb(result)
                                 .then(binaryData => {
-                                    console.log('紧急转换成功');
+                                    console.log('Emergency conversion successful');
                                     resolve(binaryData);
                                 })
                                 .catch(conversionError => {
@@ -2678,7 +2678,7 @@ This report provides complete verification info along with screenshot and model 
                         }
                         
                         const size = processedData.byteLength || processedData.length || 'unknown';
-                        console.log(`GLB导出成功（二进制格式），大小: ${size}字节`);
+                        console.log(`GLB exported successfully (binary format), size: ${size} bytes`);
                         console.log(`导出配置: binary=true, embedImages=true, maxTextureSize=1024`);
                         resolve(processedData);
                     },
@@ -2803,7 +2803,7 @@ This report provides complete verification info along with screenshot and model 
                     }
                     
                     const exportTime = Date.now() - startTime;
-                    console.log(`STL导出成功，大小: ${stlData.length}字符，用时: ${exportTime}ms`);
+                    console.log(`STL exported successfully, size: ${stlData.length} characters, time: ${exportTime}ms`);
                     
                     // 将字符串转换为Uint8Array以兼容JSZip
                     const encoder = new TextEncoder();
@@ -2864,7 +2864,7 @@ This report provides complete verification info along with screenshot and model 
                 compressionOptions: { level: 6 }
             });
             
-            console.log(`zip包创建成功 (${(zipBlob.size / 1024 / 1024).toFixed(2)} MB)`);
+            console.log(`ZIP package created successfully (${(zipBlob.size / 1024 / 1024).toFixed(2)} MB)`);
             return zipBlob;
             
         } catch (error) {
@@ -3310,7 +3310,7 @@ For questions, refer to the project documentation or visit the support forum.
                 }
             }
 
-            console.log('导出功能测试完成成功!');
+            console.log('Export functionality test completed successfully!');
             console.log('总结:');
             console.log('   - 导出器系统: 就绪');
             console.log('   - 纹理验证: 通过');
