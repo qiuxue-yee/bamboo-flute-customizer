@@ -1,0 +1,173 @@
+export const translations = {
+  en: {
+    title: 'Dizi Studio',
+    workspace: 'Bamboo flute workshop',
+    sourceLink: 'GitHub',
+    sceneLabel: 'BAMBOO / 3D PREVIEW',
+    choosePattern: 'Start with a pattern',
+    presetHint: 'A few ideas to make it yours.',
+    presetLeaves: 'Bamboo leaves',
+    presetFlow: 'Flow',
+    presetRings: 'Circles',
+    presetRipples: 'Ripples',
+    dropHint: 'or drop it here · PNG, JPG, WebP',
+    dragPattern: 'Drag or use arrow keys to position your pattern',
+    dragHint: 'Drag to position',
+    fullView: 'Whole flute',
+    detailView: 'Pattern detail',
+    viewMode: 'Viewing mode',
+    subtitle: 'Make a flute your own',
+    language: 'Language',
+    loading: 'Loading the flute and its parts…',
+    loadingFailed: 'The model could not be loaded.',
+    webglUnavailable: 'The 3D view could not start. Check that your browser supports WebGL, then try again.',
+    webglLost: 'The 3D view was interrupted. Try again to restore your current design.',
+    retry: 'Try again',
+    ready: 'Flute ready',
+    viewerLabel: 'Interactive 3D bamboo flute',
+    controlsLabel: 'Customization controls',
+    viewHelp: 'Drag to rotate · Scroll to zoom',
+    viewHelpTouch: 'Drag to rotate · Pinch to zoom',
+    resetView: 'Reset view',
+    patternLayout: 'Make it fit',
+    noPattern: 'No pattern selected',
+    patternApplied: 'Pattern applied',
+    customization: 'Pattern customization',
+    chooseFile: 'Upload your image',
+    noFile: 'No file chosen',
+    clearPattern: 'Remove',
+    horizontal: 'Horizontal',
+    vertical: 'Vertical',
+    resetPosition: 'Center',
+    undo: 'Undo',
+    redo: 'Redo',
+    export: 'Export',
+    format: 'File format',
+    zip: 'Full package · ZIP',
+    glb: 'Patterned part · GLB',
+    stl: 'Geometry · STL',
+    includeStl: 'Include STL files',
+    formatNote: 'GLB keeps your finish. STL is geometry only, in mm.',
+    exportButton: 'Download',
+    exporting: 'Preparing files…',
+    exportProgress: 'Preparing file {current} of {total}…',
+    exported: 'Download started.',
+    exportFailed: 'Export failed. Please try again.',
+    exportFailedPart: 'Part {part} could not be exported {format}.',
+    exportFailedZip: 'ZIP creation failed. Please try again.',
+    uploadTypeError: 'Choose a PNG, JPEG or WebP image.',
+    uploadSizeError: 'The image must be 5 MB or smaller.',
+    uploadDecodeError: 'The image could not be opened. Please choose another file.',
+    renderingError: 'The pattern could not be displayed.',
+    guide: 'Help',
+    close: 'Close',
+    guideViewTitle: '3D view',
+    guideView: 'Drag the flute to rotate it or scroll to zoom. Focus the 3D view to use the arrow keys / WASD. On touch screens, drag to rotate and pinch to zoom.',
+    guidePatternTitle: 'Add a pattern',
+    guidePattern: 'Try a sample, or upload a PNG, JPEG or WebP up to 5 MB. Drag the image in the layout to position it, or fine-tune with the sliders. Undo and redo work with both.',
+    guideExportTitle: 'Export',
+    guideExport: 'GLB includes the pattern. STL contains geometry only. ZIP contains all three parts; STL files can be included.',
+    guideUnits: 'GLB uses metres and STL coordinates use millimetres. Original dimensions are assumed to be millimetres; physical fit, printing and tuning have not been tested.',
+    errorDetails: 'Details',
+  },
+  zh: {
+    title: '竹笛定制',
+    workspace: '竹笛图案工作台',
+    sourceLink: 'GitHub',
+    sceneLabel: '竹材 / 三维预览',
+    choosePattern: '从一个图案开始',
+    presetHint: '选一张试试，找到你的灵感。',
+    presetLeaves: '竹叶',
+    presetFlow: '流线',
+    presetRings: '圆环',
+    presetRipples: '波纹',
+    dropHint: '也可拖入图片 · PNG、JPG、WebP',
+    dragPattern: '拖动或使用方向键调整图案位置',
+    dragHint: '拖动调整位置',
+    fullView: '查看整笛',
+    detailView: '图案细节',
+    viewMode: '查看方式',
+    subtitle: '定制属于你的竹笛',
+    language: '语言',
+    loading: '正在加载竹笛与各个部件…',
+    loadingFailed: '模型加载失败。',
+    webglUnavailable: '无法启动三维视图。请检查浏览器是否支持 WebGL，然后重试。',
+    webglLost: '三维视图已中断。请重试以恢复当前图案。',
+    retry: '重新加载',
+    ready: '竹笛已准备好',
+    viewerLabel: '交互式竹笛三维视图',
+    controlsLabel: '定制控件',
+    viewHelp: '拖动旋转 · 滚轮缩放',
+    viewHelpTouch: '拖动旋转 · 双指缩放',
+    resetView: '恢复视角',
+    patternLayout: '调整图案',
+    noPattern: '尚未选择图案',
+    patternApplied: '图案已应用',
+    customization: '图案定制',
+    chooseFile: '选择图片',
+    noFile: '未选择文件',
+    clearPattern: '清除图案',
+    horizontal: '水平位置',
+    vertical: '垂直位置',
+    resetPosition: '居中',
+    undo: '撤销',
+    redo: '重做',
+    export: '导出',
+    format: '文件格式',
+    zip: '完整模型包（ZIP）',
+    glb: 'GLB · 定制部件',
+    stl: 'STL · 定制部件',
+    includeStl: '包含 STL 文件',
+    formatNote: 'GLB 保留外观；STL 仅含几何，单位为毫米。',
+    exportButton: '下载',
+    exporting: '正在准备文件…',
+    exportProgress: '正在准备第 {current} / {total} 个文件…',
+    exported: '已开始下载。',
+    exportFailed: '导出失败，请重试。',
+    exportFailedPart: '部件 {part} 导出失败 {format}。',
+    exportFailedZip: 'ZIP 打包失败，请重试。',
+    uploadTypeError: '请选择 PNG、JPEG 或 WebP 图片。',
+    uploadSizeError: '图片不能超过 5 MB。',
+    uploadDecodeError: '无法打开图片，请选择其他文件。',
+    renderingError: '无法显示图案。',
+    guide: '使用指南',
+    close: '关闭',
+    guideViewTitle: '三维视图',
+    guideView: '拖动竹笛旋转、滚轮缩放；选中三维视图后可使用方向键或 WASD。触屏设备拖动旋转，双指缩放。',
+    guidePatternTitle: '添加图案',
+    guidePattern: '试用预设图案，或上传不超过 5 MB 的 PNG、JPEG 或 WebP 图片。拖动布局中的图案或使用滑块调整位置；两种操作均可撤销和重做。',
+    guideExportTitle: '导出',
+    guideExport: 'GLB 保留图案，STL 仅包含几何。ZIP 包含三个部件，也可同时包含 STL 文件。',
+    guideUnits: 'GLB 以米为单位，STL 坐标以毫米计。原始模型数值暂按毫米解释；实体装配、打印及音准尚未实测。',
+    errorDetails: '详细信息',
+  },
+};
+
+export class Localizer {
+  constructor() {
+    try { this.language = localStorage.getItem('dizi-language') === 'zh' ? 'zh' : 'en'; }
+    catch { this.language = 'en'; }
+  }
+  text(key, values = {}) {
+    let result = translations[this.language][key] || translations.en[key] || key;
+    for (const [name, value] of Object.entries(values)) result = result.replaceAll(`{${name}}`, String(value));
+    return result;
+  }
+  setLanguage(language) {
+    this.language = language === 'zh' ? 'zh' : 'en';
+    try { localStorage.setItem('dizi-language', this.language); } catch { /* storage is optional */ }
+    this.apply();
+  }
+  apply() {
+    document.documentElement.lang = this.language === 'zh' ? 'zh-CN' : 'en';
+    document.title = this.text('title');
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      element.textContent = this.text(element.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(element => {
+      element.setAttribute('aria-label', this.text(element.dataset.i18nAria));
+    });
+    const select = document.getElementById('language-select');
+    if (select) select.value = this.language;
+  }
+}

@@ -1,154 +1,86 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>交互�?D竹笛定制工具</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="assets/uv_layout_placeholder.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f1"><meta name="description" content="Explore a 3D bamboo flute, position your own pattern, and download the model."><link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <title>Dizi Studio</title><link rel="stylesheet" href="/styles.css">
 </head>
-<body class="framed">
-    <main>
-        <!-- 主应用容器（国风主题） -->
-        <div class="app-container">
-            
-            
-            <!-- 中央：3D视口（带边框） -->
-            <div class="viewport-frame">
-                <div id="canvas-container"></div>
-            </div>
-            
-            <!-- 右侧：统一控制面板（国风） -->
-            <div class="right-panel">
-                <!-- 1) 图像UV预览 -->
-                <div class="card uv-card" role="region" aria-labelledby="uv-preview-title">
-                    <h3 id="uv-preview-title" class="preview-title" data-i18n-key="image_uv_preview">图案UV预览</h3>
-                    <div id="uvPreviewPanel" class="uv-preview-panel">
-                        <div class="uv-preview-container">
-                            <div id="imageUvContainer" class="uv-container">
-                                <h4 class="uv-section-title">Image UV</h4>
-                                <div class="uv-canvas-wrapper">
-                                    <canvas id="imageUvCanvas" width="260" height="120" aria-label="Image UV preview canvas"></canvas>
-                                </div>
-                                <p class="uv-status" id="imageUvStatus" data-i18n-key="waiting_image" role="status" aria-live="polite">等待图像内容...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2) 图像定制 -->
-                <div class="card" role="region" aria-labelledby="image-customization-title">
-                    <h3 id="image-customization-title" class="card-title" data-i18n-key="image_customization">图案定制</h3>
-                    <div class="form-group">
-                        <label class="form-label" for="pattern-upload" data-i18n-key="upload_pattern">上传图案</label>
-                        <div class="form-row">
-                            <button id="pattern-upload" class="btn btn-secondary" data-i18n-key="select_file" aria-label="Select image file">选择文件</button>
-                            <span id="file-name-display" class="file-name" data-i18n-key="no_file_chosen" role="status" aria-live="polite">未选择文件</span>
-                        </div>
-                        <button id="clear-image-btn" class="btn btn-secondary" data-i18n-key="clear_image" aria-label="Clear uploaded image">清除图案</button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" data-i18n-key="position_offset">位置偏移</label>
-                        <div class="slider-container">
-                            <span class="slider-label" aria-hidden="true">U</span>
-                            <input type="range" min="-1" max="1" value="0" step="0.01" class="slider" id="u-slider" aria-label="Horizontal offset (U coordinate)" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0">
-                            <span class="slider-value" id="u-value" aria-live="polite">0.00</span>
-                        </div>
-                        <div class="slider-container">
-                            <span class="slider-label" aria-hidden="true">V</span>
-                            <input type="range" min="-1" max="1" value="0" step="0.01" class="slider" id="v-slider" aria-label="Vertical offset (V coordinate)" aria-valuemin="-1" aria-valuemax="1" aria-valuenow="0">
-                            <span class="slider-value" id="v-value" aria-live="polite">0.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3) 导出 -->
-                <div class="card" role="region" aria-labelledby="export-title">
-                    <h3 id="export-title" class="card-title" data-i18n-key="export">导出</h3>
-                    <div class="form-group">
-                        <div class="select-wrapper">
-                        <label for="export-format-select" class="sr-only">导出格式</label>
-                        <select id="export-format-select" class="form-select" aria-label="选择导出格式">
-                            <option value="zip" data-i18n-key="packaging_zip">制造包 (ZIP)</option>
-                            <option value="glb">GLB</option>
-                            <option value="stl">STL</option>
-                        </select>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="include-stl-checkbox" class="form-checkbox" checked aria-describedby="stl-checkbox-label">
-                            <label id="stl-checkbox-label" for="include-stl-checkbox" data-i18n-key="include_stl">包含STL文件</label>
-                        </div>
-                        <button id="export-model-btn" class="btn btn-primary" data-i18n-key="export_btn" aria-label="Export customized model">导出制造包</button>
-                    </div>
-                </div>
-
-                <!-- 4) 应用控制 -->
-                <div class="card app-controls-card" role="region" aria-labelledby="app-controls-title">
-                    <h3 id="app-controls-title" class="card-title" data-i18n-key="application_controls">应用控制</h3>
-                    <!-- Language selector removed - English only -->
-                    <button id="open-guide-btn" class="btn btn-secondary" data-i18n-key="view_user_guide" aria-label="Open user guide">查看操作指南</button>
-                </div>
-            </div>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><h1 data-i18n="title">Dizi Studio</h1><span class="brand-description" data-i18n="workspace">Bamboo flute workshop</span></div>
+    <div class="top-actions">
+      <a class="project-link" href="https://github.com/qiuxue-yee/bamboo-flute-customizer" data-i18n="sourceLink">GitHub</a>
+      <button id="open-guide-btn" class="quiet-button" data-i18n="guide" type="button">Help</button>
+      <label><span class="sr-only" data-i18n="language">Language</span><select id="language-select" data-i18n-aria="language"><option value="en">EN</option><option value="zh">中文</option></select></label>
+    </div>
+  </header>
+  <main class="workspace">
+    <section class="viewport-frame" data-i18n-aria="viewerLabel">
+      <div class="scene-caption"><span class="status-dot"></span><span data-i18n="sceneLabel">YOUR CANVAS, IN BAMBOO</span></div>
+      <div id="canvas-container" class="canvas-container"></div>
+      <div class="viewport-actions">
+        <div class="view-switch" role="group" data-i18n-aria="viewMode">
+          <button id="view-full-btn" type="button" data-i18n="fullView" aria-pressed="true">Whole flute</button>
+          <button id="view-detail-btn" type="button" data-i18n="detailView" aria-pressed="false">Pattern detail</button>
         </div>
-
-        <!-- 用户指南模态框 -->
-        <div id="guide-modal-overlay" class="modal-overlay hidden" role="dialog" aria-labelledby="guide-modal-title" aria-modal="true">
-            <div id="guide-modal" class="modal-content">
-                <button id="close-guide-modal" class="modal-close-btn" aria-label="关闭用户指南">&times;</button>
-                <h3 id="guide-modal-title" data-i18n-key="guide_title">用户指南</h3>
-                
-                <div style="background: #fff3cd; padding: 12px; margin-bottom: 15px; border-radius: 6px; border-left: 4px solid #ffc107;">
-                    <p style="margin: 0; font-size: 14px; color: #856404;">
-                        <b data-i18n-key="guide_notice_title">重要通知：</b>
-                        <span data-i18n-key="guide_notice_text">Web预览可能与导出结果略有不同。在最终ZIP导出前使用GLB导出验证定位。查看结果：<a href="https://gltf-viewer.donmccurdy.com/" target="_blank" style="color: #0066cc;">gltf-viewer.donmccurdy.com</a></span>
-                    </p>
-                </div>
-                
-                <ul>
-                    <li data-i18n-key="guide_sec1_title"><b>3D视图控制</b></li>
-                    <li data-i18n-key="guide_sec1_item1"><b>旋转：</b> 使用方向键或WASD键围绕模型旋转相机。</li>
-                    <li data-i18n-key="guide_sec1_item2"><b>缩放：</b> 滚动鼠标滚轮放大或缩小。</li>
-                    <li data-i18n-key="guide_sec1_item3"><b>平移：</b> 右键拖拽移动视图。</li>
-
-                    <li data-i18n-key="guide_sec2_title"><b>图像定制</b></li>
-                    <li data-i18n-key="guide_sec2_item1"><b>上传：</b> 点击"选择文件"按钮。支持PNG、JPG、WebP格式（建议最大5MB）。</li>
-                    <li data-i18n-key="guide_sec2_item2"><b>调整：</b> 上传后，使用U（水平）和V（垂直）滑块调整图像在笛子上的位置。</li>
-                    <li data-i18n-key="guide_sec2_item3"><b>UV预览：</b> 预览面板实时显示图像在UV贴图上的布局。</li>
-
-                    <li data-i18n-key="guide_sec3_title"><b>导出</b></li>
-                    <li data-i18n-key="guide_sec3_item1"><b>GLB（单个文件）：</b> 仅导出定制部件用于快速预览验证。在最终导出前使用此选项检查定位准确性。</li>
-                    <li data-i18n-key="guide_sec3_item2"><b>制造包（ZIP）：</b> 包含所有3D部件的完整包，以GLB格式，可直接用于生产或导入3D软件。</li>
-                    <li data-i18n-key="guide_sec3_item3"><b>包含STL：</b> 选中后，将添加优化用于3D打印的STL文件到包中。</li>
-                </ul>
-            </div>
+        <button id="reset-view-btn" class="reset-view" type="button" data-i18n="resetView">Reset view</button>
+      </div>
+      <p class="view-help view-help-desktop" data-i18n="viewHelp">Drag to rotate · Scroll to zoom</p>
+      <p class="view-help view-help-touch" data-i18n="viewHelpTouch">Drag to rotate · Pinch to zoom</p>
+      <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite">
+        <div class="loading-card"><span id="loading-spinner" class="spinner" aria-hidden="true"></span>
+          <p id="loading-message" data-i18n="loading"></p><p id="loading-detail" class="loading-detail" hidden></p>
+          <button id="retry-btn" class="button button-secondary" type="button" data-i18n="retry" hidden>Try again</button>
         </div>
-        
-
-        <!-- 加载覆盖层 -->
-        <div id="loading-overlay" role="status" aria-live="polite">
-            <div class="spinner"></div>
-            <div class="loading-text" data-i18n-key="loading_3d_model">正在加载3D模型...</div>
+      </div>
+    </section>
+    <aside class="right-panel" data-i18n-aria="controlsLabel">
+      <div class="panel-content">
+        <section class="preset-section">
+          <div class="section-heading"><h2 data-i18n="choosePattern">Start with a pattern</h2><span class="section-number">01</span></div>
+          <p class="section-note" data-i18n="presetHint">A few ideas to make it yours.</p>
+          <div id="preset-grid" class="preset-grid"></div>
+        </section>
+        <section class="upload-section">
+          <button id="pattern-upload" class="upload-zone" type="button">
+            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M4 15v5h16v-5"/></svg>
+            <span class="upload-title" data-i18n="chooseFile">Upload your image</span>
+            <span class="upload-hint" data-i18n="dropHint">or drop it here · PNG, JPG, WebP</span>
+          </button>
+          <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        </section>
+        <section id="pattern-editor" class="editor-section" hidden>
+          <div class="section-heading"><h2 id="preview-title" data-i18n="patternLayout">Make it fit</h2><span class="section-number">02</span></div>
+          <div class="editor-preview">
+            <canvas id="image-preview" width="1024" height="565" tabindex="0" data-i18n-aria="dragPattern" aria-label="Drag to position your pattern"></canvas>
+            <span class="drag-hint" data-i18n="dragHint">Drag to position</span>
+          </div>
+          <div class="file-row"><span id="file-name-display" class="file-name" role="status"></span><button id="clear-image-btn" class="quiet-button" type="button" data-i18n="clearPattern">Remove</button></div>
+          <div class="range-group"><div class="range-heading"><label for="u-slider" data-i18n="horizontal">Horizontal</label><output id="u-value" for="u-slider">0.00</output></div><input id="u-slider" type="range" min="-1" max="1" step="0.01" value="0"></div>
+          <div class="range-group"><div class="range-heading"><label for="v-slider" data-i18n="vertical">Vertical</label><output id="v-value" for="v-slider">0.00</output></div><input id="v-slider" type="range" min="-1" max="1" step="0.01" value="0"></div>
+          <p id="preview-status" class="sr-only" role="status" aria-live="polite"></p>
+        </section>
+        <div id="history-actions" class="button-row" hidden><button id="reset-position-btn" class="quiet-button" type="button" data-i18n="resetPosition">Center</button><div><button id="undo-btn" class="quiet-button" type="button" data-i18n="undo">Undo</button><button id="redo-btn" class="quiet-button" type="button" data-i18n="redo">Redo</button></div></div>
+        <p id="app-status" class="app-status" role="status" aria-live="polite"></p>
+      </div>
+      <section class="export-section" aria-label="Export">
+        <div class="download-row"><label class="sr-only" for="export-format-select" data-i18n="format"></label>
+          <select id="export-format-select"><option value="zip" data-i18n="zip">Full package · ZIP</option><option value="glb" data-i18n="glb">Patterned part · GLB</option><option value="stl" data-i18n="stl">Geometry · STL</option></select>
+          <button id="export-model-btn" class="button button-primary" type="button"><span data-i18n="exportButton">Download</span><span aria-hidden="true">↗</span></button>
         </div>
-
-        
-
-    </main>
-
-    <!-- Three.js库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
-    <!-- 3D模型导出库 -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/STLExporter.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/OBJExporter.js"></script>
-    <!-- JSZip用于创建制造ZIP包 -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- GSAP用于平滑相机动画 -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-    <!-- 主应用脚本（ES模块） -->
-    <script type="module" src="main.js"></script>
-</body>
-</html>
+        <label id="stl-option" class="checkbox-row"><input id="include-stl-checkbox" type="checkbox" checked><span data-i18n="includeStl">Include STL files</span></label>
+        <p class="format-note" data-i18n="formatNote"></p>
+        <p id="export-status" class="export-status" role="status" aria-live="polite"></p>
+      </section>
+    </aside>
+  </main>
+  <dialog id="guide-dialog" aria-labelledby="guide-title">
+    <div class="dialog-heading"><h2 id="guide-title" data-i18n="guide">Help</h2><button id="close-guide-btn" class="dialog-close" type="button" data-i18n-aria="close">×</button></div>
+    <h3 data-i18n="guideViewTitle"></h3><p data-i18n="guideView"></p>
+    <h3 data-i18n="guidePatternTitle"></h3><p data-i18n="guidePattern"></p>
+    <h3 data-i18n="guideExportTitle"></h3><p data-i18n="guideExport"></p>
+    <p class="guide-note" data-i18n="guideUnits"></p>
+  </dialog>
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  <script type="module" src="/main.js"></script>
+</body></html>
