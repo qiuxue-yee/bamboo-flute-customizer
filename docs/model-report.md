@@ -58,7 +58,7 @@ checks, not measurements of a printed instrument.
 
 ## Reproduce
 
-The commands in the project README recreate the source inspection, assembly
+The commands in the [developer notes](development.md) recreate the source inspection, assembly
 intersection check, UV calibration, comparison render and export round-trip
 report. Detailed JSON and editable Blender files are placed under
 `output/blender/`.
